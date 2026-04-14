@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: msvc-patient
+              uri: http://localhost:8090
+              predicates:
+                - Path=/api/patient/**
+            - id: msvc-doctor
+              uri: http://localhost:8091
+              predicates:
+                - Path=/api/doctor/**
+            - id: msvc-appointment
+              uri: http://localhost:8092
+              predicates:
+                - Path=/api/appointment/**
+            - id: msvc-prescription
+              uri: http://localhost:8093
+              predicates:
+                - Path=/api/prescription/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
